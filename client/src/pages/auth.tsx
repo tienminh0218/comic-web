@@ -21,6 +21,7 @@ const LoginPage = () => {
 
     if (user) {
         router.push("/");
+
         return <LoadingScreen />;
     }
 
@@ -51,13 +52,13 @@ const LoginPage = () => {
                 <div className="mt-6 space-y-4">
                     <div
                         onClick={signInWithFacebook}
-                        className="flex-center gap-1 rounded-md cursor-pointer hover:opacity-95 transition-default w-full py-2 text-lg font-medium bg-indigo-700 text-white text-center"
+                        className="flex-center gap-2 rounded-md cursor-pointer hover:opacity-95 transition-default w-full py-2 text-lg font-medium bg-indigo-700 text-white text-center"
                     >
                         <BsFacebook /> <span>Đăng nhập với Facebook</span>
                     </div>
                     <div
                         onClick={signInWithGoogle}
-                        className="flex-center gap-1 rounded-md cursor-pointer hover:opacity-95 transition-default w-full py-2 text-lg font-medium bg-red-600 text-white text-center"
+                        className="flex-center gap-2 rounded-md cursor-pointer hover:opacity-95 transition-default w-full py-2 text-lg font-medium bg-red-600 text-white text-center"
                     >
                         <BsGoogle /> <span>Đăng nhập với Google</span>
                     </div>

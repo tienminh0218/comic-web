@@ -1,0 +1,6 @@
+{
+    "extends": ["nextjs"],
+    "parserOptions": {
+        "sourceType": "module"
+    }
+}

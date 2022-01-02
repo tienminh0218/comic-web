@@ -1,4 +1,4 @@
-import { Timestamp, FieldValue } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 
 interface InfoUser {
     firstName: string | any;
@@ -18,7 +18,6 @@ export interface HistoryViewed {
     idChapter: string;
     imageURL: string;
     nameComic: string;
-    listChap: string[];
 }
 
 export interface ComicWasInteracted {

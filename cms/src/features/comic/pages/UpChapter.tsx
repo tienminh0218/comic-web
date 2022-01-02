@@ -59,7 +59,7 @@ export const UpChapter = () => {
             arr.push({
                 fullPath: "",
                 nameFile: `${uuidv4()}.jpg`,
-                url: URL.createObjectURL(e.target.files?.item(i)),
+                url: URL.createObjectURL(e.target.files?.item(i)!),
                 file: e.target.files?.item(i)!,
             });
         }
@@ -147,7 +147,7 @@ export const UpChapter = () => {
             firestore.updateDb(COMICS, comicId, {
                 listChapter: [
                     ...comic!.listChapter,
-                    { idChapter, name: nameChapter, createdAt: new Date().toLocaleDateString("UTC") },
+                    { idChapter, name: nameChapter, views: 0, createdAt: new Date().toLocaleDateString("UTC") },
                 ],
                 updatedAt: serverTimestamp(),
             }),

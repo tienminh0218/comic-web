@@ -8,8 +8,8 @@ export const HomeController = {
             const result = await Promise.all([
                 comicRef.where("recommended", "==", true).get(),
                 comicRef.orderBy("interacts.views", "desc").limit(6).get(),
-                comicRef.orderBy("createdAt", "desc").limit(8).get(),
-                comicRef.limit(6).get(),
+                comicRef.orderBy("updatedAt", "desc").limit(8).get(),
+                comicRef.orderBy("createdAt", "desc").limit(6).get(),
             ]);
             const [recommend, popular, lastUpdated, newSeries] = result.map((list) => convertsData(list));
 

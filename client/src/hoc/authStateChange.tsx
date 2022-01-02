@@ -17,7 +17,7 @@ interface Props {
 export const AuthStateChange = ({ children }: Props) => {
     const [isLoading, setIsLoading] = useState(true);
     const setGenres = useSetRecoilState(genresState);
-    const [test, setComicsHaveReadState] = useRecoilState(comicsHaveReadState);
+    const [, setComicsHaveReadState] = useRecoilState(comicsHaveReadState);
     const setInteractState = useSetRecoilState(interactComicsState);
     const { setUser } = useAuth();
 

@@ -9,10 +9,11 @@ export const UserController = {
             if (!userId) return next(createError(400, "Bookmark Not Found"));
             const user = convertData(await db.collection("users").doc(userId).get());
             const listBookmark = user.histories.comicsWasInteracted;
-            if (listBookmark.length === 0) return res.status(200).json({ comics: [] });
+            const newList = listBookmark.filter((item) => item.isBookmark);
+            if (listBookmark.length === 0) return res.status(200).json([]);
             const comics = convertsData(
                 await Promise.all(
-                    listBookmark.map((item) => {
+                    newList.map((item) => {
                         return db.collection("comics").doc(item.idComic).get();
                     })
                 )

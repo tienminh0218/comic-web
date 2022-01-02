@@ -12,10 +12,10 @@ import { MainLayout } from "@/components/Layouts";
 import { apiClient } from "@/lib/axios";
 import { firestore } from "@/lib/firebase/service";
 import { ComicType, NextPageWithLayout, ComicWasInteracted } from "@/models/index";
-import { LoadingScreen } from "@/components/Common";
+import { LoadingScreen, SoonFeature } from "@/components/Common";
 import Genres from "@/components/Genres";
 import { useAuth } from "@/hook/index";
-import { interactOfComic } from "@/app/selector";
+import { interactOfComic, historyOfComic } from "@/app/selector";
 import { interactComicsState } from "@/app/atoms";
 
 interface DetailPageProps {
@@ -30,8 +30,8 @@ interface InteractOfUserWithComic {
 const TitlePage: NextPageWithLayout<DetailPageProps> = ({ comic }) => {
     const [comicState, setComicState] = useState<ComicType>(comic);
     const { interactState, index } = useRecoilValue(interactOfComic(comic.id!));
+    const historyComic = useRecoilValue(historyOfComic(comic.id!));
     const [listInteract, setListInteract] = useRecoilState(interactComicsState);
-
     const router = useRouter();
     const { user } = useAuth();
 
@@ -114,11 +114,11 @@ const TitlePage: NextPageWithLayout<DetailPageProps> = ({ comic }) => {
                             height={90}
                             toggle={({ isOpen }) =>
                                 isOpen ? (
-                                    <p className="text-lg mb-5 font-semibold underline dark:text-dark-text-color transition-all">
+                                    <p className="text-lg font-semibold underline dark:text-dark-text-color transition-all">
                                         Rút gọn
                                     </p>
                                 ) : (
-                                    <p className="text-lg mb-5 font-semibold underline dark:text-dark-text-color transition-all">
+                                    <p className="text-lg font-semibold underline dark:text-dark-text-color transition-all">
                                         Xem thêm
                                     </p>
                                 )
@@ -130,7 +130,7 @@ const TitlePage: NextPageWithLayout<DetailPageProps> = ({ comic }) => {
                             </p>
                         </AnimatedShowMore>
                     </div>
-                    <div className="h-auto flex flex-col w-full bg-dark-text-color p-8 gap-4 rounded-lg dark:bg-[#1A1A1A] dark:text-[#c9d1d9] transition-all 2xl:mb-8 ">
+                    <div className="mt-5 h-auto flex flex-col w-full bg-dark-text-color p-8 gap-4 rounded-lg dark:bg-[#1A1A1A] dark:text-[#c9d1d9] transition-all 2xl:mb-8 ">
                         <div className="flex flex-col gap-2 md:flex-row">
                             <p className="font-bold text-base ">Tác giả / Họa sĩ:</p>
                             <span>
@@ -187,12 +187,17 @@ const TitlePage: NextPageWithLayout<DetailPageProps> = ({ comic }) => {
                                 >
                                     <a>
                                         <div className="flex justify-between pr-4 py-2 border-b border-[#d8dee4] dark:border-[#30363d] text-sm font-normal text-gray-500  dark:text-dark-text-color">
-                                            <span className="min-w-[9rem] w-1/2  truncate hover:text-black dark:hover:text-pink-500 hover:font-semibold cursor-pointer ml-4">
+                                            <span
+                                                className={`${
+                                                    historyComic?.comic.listChap.includes(chapter.idChapter) &&
+                                                    "sub-color"
+                                                } hover:text-black dark:hover:text-pink-500 hover:font-semibold min-w-[9rem] w-1/2  truncate  cursor-pointer ml-4`}
+                                            >
                                                 Chương {chapter.name}
                                             </span>
                                             <div className="flex justify-between w-1/2 space-x-2">
                                                 <span className="">{chapter.createdAt}</span>
-                                                <span className="">~8 tỷ</span>
+                                                <span className="">{chapter.views} </span>
                                             </div>
                                         </div>
                                     </a>
@@ -210,19 +215,23 @@ const TitlePage: NextPageWithLayout<DetailPageProps> = ({ comic }) => {
                     <div className=" flex w-content flex-wrap  md:w-8/12 text-lg dark:text-dark-text-color">
                         {comicState.listChapter.length > 0 && (
                             <>
-                                {/* {interactUser?.lastChapter ? (
-                                    <Link href={``}>
+                                {historyComic ? (
+                                    <Link
+                                        href={`/title/${historyComic.comic.idComic}/view/${historyComic.comic.idChapter}`}
+                                    >
                                         <a className="text-base flex-center mr-2 mb-2 px-3 py-1 rounded-md tracking-wider font-semibold border-solid border border-[#d8dee4] dark:border-[#30363d] bg-gray-200 hover:bg-transparent hover:cursor-pointer dark:bg-[#1A1A1A] dark:hover:bg-transparent transition-default ">
-                                            Đọc tiếp chap {interactUser.lastChapter}
+                                            Đọc tiếp chap {historyComic.comic.nameChapter}
                                         </a>
                                     </Link>
                                 ) : (
-                                    <Link href={`/titles/${comicState.id}/views/${comicState.listChapter[0].idChapter}`}>
+                                    <Link
+                                        href={`/titles/${comicState.id}/views/${comicState.listChapter[0].idChapter}`}
+                                    >
                                         <a className="text-base flex-center mr-2 mb-2 px-3 py-1 rounded-md tracking-wider font-semibold border-solid border border-[#d8dee4] dark:border-[#30363d] bg-gray-200 hover:bg-transparent hover:cursor-pointer dark:bg-[#1A1A1A] dark:hover:bg-transparent transition-default ">
                                             Đọc mới nhất
                                         </a>
                                     </Link>
-                                )} */}
+                                )}
 
                                 <Link
                                     href={`/title/${comicState.id}/view/${
@@ -255,6 +264,11 @@ const TitlePage: NextPageWithLayout<DetailPageProps> = ({ comic }) => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="md:pl-16 2xl:pl-80">
+                <h3 className="text-color-default font-medium text-3xl">Comments</h3>
+                <SoonFeature />
             </div>
         </div>
     );

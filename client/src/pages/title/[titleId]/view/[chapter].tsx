@@ -5,12 +5,13 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect } from "react";
+import { increment } from "firebase/firestore";
 
 import { apiClient } from "@/lib/axios/index";
 import Footer from "@/components/Layouts/Footer";
 import { NavReading, NextAndPrevChap } from "@/components/Layouts/Nav";
-import { ComicType, Chapter, NextPageWithLayout } from "@/models/index";
-import { LoadingScreen } from "@/components/Common";
+import { ComicType, Chapter } from "@/models/index";
+import { LoadingScreen, SoonFeature } from "@/components/Common";
 import { historyOfComic } from "@/app/selector";
 import { comicsHaveReadState } from "@/app/atoms";
 import { firestore } from "@/lib/firebase/service";
@@ -54,6 +55,7 @@ const ViewsPage = ({ comic, chapter, nextAndPrev }: ViewsPageProps) => {
                     ...historyComic.comic,
                     idChapter: chapter.id!,
                     nameChapter: chapter.nameChapter,
+                    listChap: [...historyComic.comic.listChap, chapter.id!],
                     updatedAt: new Date().toUTCString(),
                 });
             } else {
@@ -62,6 +64,7 @@ const ViewsPage = ({ comic, chapter, nextAndPrev }: ViewsPageProps) => {
                     nameComic: comic.name.vnName,
                     imageURL: comic.images?.thumbnail.url!,
                     idChapter: chapter.id!,
+                    listChap: [chapter.id!],
                     nameChapter: chapter.nameChapter,
                     createdAt: new Date().toUTCString(),
                     updatedAt: new Date().toUTCString(),
@@ -72,6 +75,14 @@ const ViewsPage = ({ comic, chapter, nextAndPrev }: ViewsPageProps) => {
                 firestore.updateDb("users", user.id, {
                     "histories.viewed": newList,
                 });
+
+            const index = comic.listChapter.findIndex((chap) => chap.idChapter === chapter.id);
+            const listChapClone = [...comic.listChapter].reverse();
+            listChapClone[index].views += 1;
+            firestore.updateDb("comics", comic.id!, {
+                listChapter: listChapClone,
+                "interacts.views": increment(1),
+            });
         };
         const timeout = setTimeout(addToHisory, 3000);
         return () => clearTimeout(timeout);
@@ -96,6 +107,11 @@ const ViewsPage = ({ comic, chapter, nextAndPrev }: ViewsPageProps) => {
                         src={image.url}
                     />
                 ))}
+            </div>
+
+            <div className="w-3/5 mx-auto">
+                <h3 className="text-color-default font-medium text-3xl">Comments</h3>
+                <SoonFeature />
             </div>
 
             <Footer />

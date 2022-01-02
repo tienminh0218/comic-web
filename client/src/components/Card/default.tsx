@@ -15,23 +15,31 @@ const convertDate = (dateComic: string): string => {
 export const Card = ({ isLastUpdate, comic }: Props) => {
     return (
         <div className="cursor-pointer">
-            <div className={`${isLastUpdate ? "h-56" : "pt-150 "} relative group z-1`}>
-                <img
-                    src={`${comic.images?.thumbnail.url}`}
-                    className="absolute top-2 scale-105 w-full h-full rounded-xl opacity-0 object-cover group-hover:opacity-60 group-hover:blur-xl transition-all duration-300"
-                    alt=""
-                />
-                <img
-                    src={`${comic.images?.thumbnail.url}`}
-                    className={`${
-                        isLastUpdate && "object-top"
-                    } absolute w-full h-full object-cover rounded-xl top-0`}
-                    alt=""
-                />
-            </div>
+            <Link href={`/title/${comic.id}`}>
+                <a>
+                    <div className={`${isLastUpdate ? "h-56" : "pt-150 "} relative group z-1`}>
+                        <img
+                            src={`${comic.images?.thumbnail.url}`}
+                            className="absolute top-2 scale-105 w-full h-full rounded-xl opacity-0 object-cover group-hover:opacity-60 group-hover:blur-xl transition-all duration-300"
+                            alt=""
+                        />
+                        <img
+                            src={`${comic.images?.thumbnail.url}`}
+                            className={`${
+                                isLastUpdate && "object-top"
+                            } absolute w-full h-full object-cover rounded-xl top-0`}
+                            alt=""
+                        />
+                    </div>
+                </a>
+            </Link>
             <div>
-                <h3 className="truncate font-bold mt-3 text-lg dark:text-white">{comic.name.vnName}</h3>
-                <div className="mt-2 text-sm text-[#6D6D6D] flex justify-between">
+                <Link href={`/title/${comic.id}`}>
+                    <a>
+                        <h3 className="truncate font-bold mt-3 text-lg dark:text-white">{comic.name.vnName}</h3>
+                    </a>
+                </Link>
+                <div className="mt-2 text-xs sm:text-sm text-[#6D6D6D] flex justify-between">
                     {comic.listChapter.length > 0 ? (
                         <Link
                             href={`/title/${comic.id}/view/${
@@ -43,7 +51,7 @@ export const Card = ({ isLastUpdate, comic }: Props) => {
                             </a>
                         </Link>
                     ) : (
-                        "No Chap"
+                        "No chap"
                     )}
                     <span>{fromNowDate(comic.updatedAt)}</span>
                 </div>

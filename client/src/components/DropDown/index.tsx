@@ -2,6 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { MdLogout } from "react-icons/md";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 import { useAuth } from "@/hook/index";
 import { navigations } from "@/commons/index";
@@ -9,10 +10,6 @@ import { Icon } from "@/components/Common";
 
 const DropDown = () => {
     const { user, signOut } = useAuth();
-
-    const soon = () => {
-        toast("Chưa làm tới bạn ơi!");
-    };
 
     return (
         <div>
@@ -42,27 +39,30 @@ const DropDown = () => {
                                     <p className="text-xl text-black dark:text-white truncate">{user?.email}</p>
                                 </div>
 
-                                {[...navigations].reverse().map(
-                                    (item) =>
-                                        item.isOnDrop && (
-                                            <Menu.Item key={item.path}>
-                                                {({ active }) => (
-                                                    <button
-                                                        onClick={soon}
-                                                        className={`${
-                                                            active && "opacity-90"
-                                                        } space-x-2 text-gray-900 flex items-center w-full p-2 text-sm`}
-                                                    >
-                                                        <Icon
-                                                            icon={item.icon!}
-                                                            className="h-5 w-5 text-gray-900 dark:fill-white mx-2"
-                                                        />
-                                                        <span className="dark:text-white">{item.name}</span>
-                                                    </button>
-                                                )}
-                                            </Menu.Item>
-                                        )
-                                )}
+                                {navigations
+                                    .filter((item) => item.isOnDrop)
+                                    .reverse()
+                                    .map((item) => (
+                                        <Link key={item.name} href={item.path}>
+                                            <a>
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <button
+                                                            className={`${
+                                                                active && "opacity-90"
+                                                            } space-x-2 text-gray-900 flex items-center w-full p-2 text-sm`}
+                                                        >
+                                                            <Icon
+                                                                icon={item.icon!}
+                                                                className="h-5 w-5 text-gray-900 dark:fill-white mx-2"
+                                                            />
+                                                            <span className="dark:text-white">{item.name}</span>
+                                                        </button>
+                                                    )}
+                                                </Menu.Item>
+                                            </a>
+                                        </Link>
+                                    ))}
 
                                 <Menu.Item>
                                     {({ active }) => (

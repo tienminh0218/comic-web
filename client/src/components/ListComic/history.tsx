@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { HistoryViewed } from "@/models/index";
 import { CardHistory } from "@/components/Card/";
 import { EmptyList } from "@/components/Common";
@@ -18,13 +16,7 @@ export const ListHistory = ({ className, title, comics }: Props) => {
                 className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 md:gap-y-10`}
             >
                 {comics.length !== 0 ? (
-                    comics.map((comic) => (
-                        <Link key={comic.idComic} href={`/title/${comic.idComic}`}>
-                            <a>
-                                <CardHistory comic={comic} />
-                            </a>
-                        </Link>
-                    ))
+                    comics.map((comic) => <CardHistory key={comic.idComic} comic={comic} />)
                 ) : (
                     <EmptyList />
                 )}

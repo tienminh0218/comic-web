@@ -17,7 +17,8 @@ export const useFetchData = <T>(collection: string, document?: string, opt?: Que
         };
 
         document ? getDoc() : getDocs();
-    }, [document, collection, opt]);
+        // }, [document, collection, opt]);
+    }, []);
 
     return { data, setData };
 };

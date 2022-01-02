@@ -1,18 +1,20 @@
 import { RiSearchLine, RiMoonLine } from "react-icons/ri";
 import { MdOutlineLightMode } from "react-icons/md";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { useAuth, useTheme } from "@/hook/index";
 import DropDown from "@/components/DropDown";
 import { navigations } from "@/commons/index";
 
 const Header = () => {
+    const router = useRouter();
     const { user } = useAuth();
     const { isDarkMode, toggleTheme } = useTheme();
 
     return (
         <div className="hidden z-50 fixed top-0 inset-x-0 text-black dark:text-white md:flex justify-between items-center px-9 h-24 font-semibold">
-            <div className="flex space-x-8">
+            <div className="flex space-x-6">
                 <Link href="/">
                     <a>
                         <svg
@@ -30,7 +32,7 @@ const Header = () => {
                     (item) =>
                         item.isOnHeader && (
                             <Link href={item.path} key={`${item.path}_navTop`}>
-                                <a className={`${item.path === "/top" && "sub-color"} cursor-pointer`}>
+                                <a className={`${item.path === router.pathname && "sub-color"} cursor-pointer`}>
                                     {item.name}
                                 </a>
                             </Link>

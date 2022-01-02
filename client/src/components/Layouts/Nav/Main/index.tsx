@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { MdOutlineLightMode } from "react-icons/md";
 import { RiUserUnfollowLine, RiMoonLine, RiSearchLine } from "react-icons/ri";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 import { navigations } from "@/commons/index";
 import { Icon } from "@/components/Common";
@@ -8,6 +10,7 @@ import { UserMenu } from "./menu";
 import { useAuth, useTheme } from "@/hook/index";
 
 export const NavBottom = () => {
+    const router = useRouter();
     const { user, signOut } = useAuth();
     const { isDarkMode, toggleTheme } = useTheme();
 
@@ -27,24 +30,26 @@ export const NavBottom = () => {
                         </>
                     )}
                 </div>
-                <Link href={"item.path"}>
-                    <div
-                        className={`${
-                            false && " text-blue-500 dark:text-pink-500 font-bold"
-                        } flex flex-col items-center gap-1 cursor-pointer`}
-                    >
-                        <Icon icon={RiSearchLine} />
-                        <p>Tìm kiếm</p>
-                    </div>
-                </Link>
+                {/* <Link href={"item.path"}> */}
+                <div
+                    className={`${
+                        false && " text-blue-500 dark:text-pink-500 font-bold"
+                    } flex flex-col items-center gap-1 cursor-pointer`}
+                    onClick={() => toast.info("Chưa có bẹn ơi :(")}
+                >
+                    <Icon icon={RiSearchLine} />
+                    <p>Tìm kiếm</p>
+                </div>
+                {/* </Link> */}
                 {navigations
                     .filter((nav) => nav.isOnNav)
-                    .map((item, index) => {
+                    .map((item) => {
                         return (
                             <Link href={item.path} key={item.name}>
                                 <div
                                     className={`${
-                                        index === 1 && " text-blue-500 dark:text-pink-500 font-bold"
+                                        item.path === router.pathname &&
+                                        " text-blue-500 dark:text-pink-500 font-bold"
                                     } flex flex-col items-center gap-1 cursor-pointer`}
                                 >
                                     <Icon icon={item.icon!} />

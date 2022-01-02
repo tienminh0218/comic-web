@@ -41,6 +41,7 @@ export interface ListChapter {
     idChapter: string;
     name: string;
     createdAt: string;
+    views: number;
 }
 
 export interface ComicType {

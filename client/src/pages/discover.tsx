@@ -3,6 +3,7 @@ import { GetStaticProps } from "next";
 import { useRecoilValue } from "recoil";
 import { IoIosArrowDown } from "react-icons/io";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { toast } from "react-toastify";
 
 import { MainLayout } from "@/components/Layouts";
 import { ComicType, NextPageWithLayout } from "@/models/index";
@@ -55,11 +56,14 @@ const Discover: NextPageWithLayout<DiscoverProps> = ({ popular, lastUpdated }: D
     };
 
     const fetchData = async () => {
-        console.log("callme");
-        const lastId = comics[comics.length - 1].id;
-        const data = await apiClient.discoverGetMoreComic<ComicType[]>(lastId!);
-        if (data.length === 0) hasMore.current = false;
-        setComics([...comics, ...data]);
+        try {
+            const lastId = comics[comics.length - 1].id;
+            const data = await apiClient.discoverGetMoreComic<ComicType[]>(lastId!);
+            if (data.length === 0) hasMore.current = false;
+            setComics([...comics, ...data]);
+        } catch (error: any) {
+            toast.info(error.message);
+        }
     };
 
     return (

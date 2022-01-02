@@ -115,7 +115,7 @@ export const useAuth = () => {
         signOutFirebase(auth)
             .then(() => {
                 setUser(undefined);
-                toast("Đăng xuất thành công");
+                // toast("Đăng xuất thành công");
             })
             .catch((error) => {
                 toast("Logout Error");

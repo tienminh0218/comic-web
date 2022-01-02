@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { Card } from "@/components/Card";
 import { ComicType } from "@/models/comic";
 import { EmptyList } from "@/components/Common";
@@ -23,13 +21,7 @@ export const ListComic = ({ isNew, comics, title, className }: Props) => {
                 } grid gap-6 md:gap-y-10`}
             >
                 {comics.length !== 0 ? (
-                    comics.map((comic) => (
-                        <Link key={comic.id} href={`/title/${comic.id}`}>
-                            <a>
-                                <Card isLastUpdate={isNew} comic={comic} />
-                            </a>
-                        </Link>
-                    ))
+                    comics.map((comic) => <Card key={comic.id} isLastUpdate={isNew} comic={comic} />)
                 ) : (
                     <EmptyList />
                 )}

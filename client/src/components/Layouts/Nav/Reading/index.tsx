@@ -4,6 +4,7 @@ import { MdOutlineLightMode } from "react-icons/md";
 import { RiMoonLine } from "react-icons/ri";
 import { HideScroll } from "react-hide-on-scroll";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 import { useTheme } from "@/hook/index";
 import { ComicType } from "@/models/comic";
@@ -50,7 +51,7 @@ export const NavReading = ({ className, comic, idCurrentChapter, nextAndPrev, on
                                 </svg>
                             </a>
                         </Link>
-                        <Link href={`/titles/${titleId}`}>
+                        <Link href={`/title/${titleId}`}>
                             <a>
                                 <p className="dark:text-[#cacaca] truncate">{comic.name.vnName}</p>
                             </a>
@@ -60,7 +61,7 @@ export const NavReading = ({ className, comic, idCurrentChapter, nextAndPrev, on
                         <div className={`${!nextAndPrev.prevId && "opacity-50 pointer-events-none"}`}>
                             <Link
                                 href={{
-                                    pathname: "/titles/[titleId]/views/[chapter]",
+                                    pathname: "/title/[titleId]/view/[chapter]",
                                     query: {
                                         titleId,
                                         chapter: nextAndPrev.prevId,
@@ -88,7 +89,7 @@ export const NavReading = ({ className, comic, idCurrentChapter, nextAndPrev, on
                         <div className={`${!nextAndPrev.nextId && "opacity-50 pointer-events-none"}`}>
                             <Link
                                 href={{
-                                    pathname: "/titles/[titleId]/views/[chapter]",
+                                    pathname: "/title/[titleId]/view/[chapter]",
                                     query: {
                                         titleId,
                                         chapter: nextAndPrev.nextId,
@@ -102,7 +103,10 @@ export const NavReading = ({ className, comic, idCurrentChapter, nextAndPrev, on
                         </div>
                     </div>
                     <div className="flex-center gap-3 sm:gap-5">
-                        <AiOutlineHeart className="w-6 h-6 sm:w-7 sm:h-7 color-icon-default cursor-pointer" />
+                        <AiOutlineHeart
+                            onClick={() => toast.info("This feature still pending")}
+                            className="w-6 h-6 sm:w-7 sm:h-7 color-icon-default cursor-pointer"
+                        />
                         <div onClick={toggleTheme}>
                             {isDarkMode ? (
                                 <RiMoonLine className="w-6 h-6 sm:w-7 sm:h-7 color-icon-default cursor-pointer" />

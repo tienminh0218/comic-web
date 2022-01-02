@@ -13,9 +13,9 @@ import { useFetchData } from "hooks";
 interface Props {
     mathUrl: string;
 }
-const q = where("deleted", "==", false);
+
 export const HomePage = ({ mathUrl }: Props) => {
-    const { data: comics } = useFetchData<ComicType[]>(COMICS, undefined, q);
+    const { data: comics } = useFetchData<ComicType[]>(COMICS, undefined, where("deleted", "==", false));
 
     return (
         <div>

@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import Link from "next/link";
 
 import { ComicType } from "@/models/comic";
 import { Item } from "./item";
@@ -15,7 +16,11 @@ export const PopularDiscoverPage = ({ className, comics }: Props) => {
             <Swiper slidesPerView="auto" spaceBetween={30} className="w-full popular">
                 {comics.map((comic, index) => (
                     <SwiperSlide key={index}>
-                        <Item comic={comic} index={index} />
+                        <Link href={`title/${comic.id}`}>
+                            <a>
+                                <Item comic={comic} index={index} />
+                            </a>
+                        </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>

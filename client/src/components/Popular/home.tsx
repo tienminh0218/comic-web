@@ -47,7 +47,7 @@ export const PopularHomePage = ({ comics, title, className }: Props) => {
                                 <div
                                     className={`${
                                         index + 1 <= 3 ? "text-black" : "text-color-default"
-                                    } w-full relative z-1 flex text-lg font-bold `}
+                                    } w-full relative z-1 flex text-sm sm:text-base md:text-lg font-bold `}
                                 >
                                     <p>{index + 1}</p>
                                     <p className="ml-6 flex-1">{comic.name.vnName}</p>
