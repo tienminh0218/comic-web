@@ -13,15 +13,16 @@ CatManga is a website to read manga, built with Nextjs and Tailwind.
 
 ##### Client github repo: [Comic-Fe](https://github.com/tienminh0218/comic-web-fe)
 - Front-end:
-  - Framework: [Nextjs](https://github.com/vercel/next.js), [Tailwind](https://github.com/tailwindlabs/tailwindcss)
-    , [Typescript](https://github.com/microsoft/TypeScript)
-  - Libraries: [Recoil](https://github.com/facebookexperimental/Recoil), [Swiper](https://github.com/nolimits4web/swiper), [Firebase](https://firebase.google.com/)
+  - Framework: [Nextjs](https://github.com/vercel/next.js), [Tailwind](https://github.com/tailwindlabs/tailwindcss).
+  - Libraries: [Recoil](https://github.com/facebookexperimental/Recoil), [Swiper](https://github.com/nolimits4web/swiper), [Firebase](https://firebase.google.com/).
+  - Language: [Typescript](https://github.com/microsoft/TypeScript).
   
   
 ##### Server github repo: [Comic-Be](https://github.com/tienminh0218/comic-web-be)
 - Back-end:
-  - Framework: [Nodejs](https://github.com/nodejs), [Express](https://github.com/expressjs/express)
-  - Libraries: [Firebase Admin](https://github.com/firebase/firebase-admin-node), [Axios](https://github.com/axios/axios)
+  - Framework: [Nodejs](https://github.com/nodejs), [Express](https://github.com/expressjs/express).
+  - Libraries: [Firebase Admin](https://github.com/firebase/firebase-admin-node), [Axios](https://github.com/axios/axios).
+  - Language: Javascript.
 
 
 
